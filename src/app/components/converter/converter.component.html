@@ -37,7 +37,7 @@
 
     <input type="submit" value="Submit">
   </form>
-
+<hr>
   <div id="volConverter">
     <h5>Volume Converter</h5>
     <form id="volumeConverter">
@@ -56,9 +56,9 @@
       </select>
       <br />
 
-      <label for="targetUnitMeasure">Target Unit of Measure</label>
+      <label for="targetVolUnitMeasure">Target Unit of Measure</label>
       <br />
-      <select name="targetUnitMeasure" id="targetUnitMeasure">
+      <select name="targetVolUnitMeasure" id="targetVolUnitMeasure">
         <option *ngFor="let unit of volumeUnits" value="{{ unit }}">
           {{ unit }}
         </option>
