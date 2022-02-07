@@ -1,0 +1,77 @@
+<div id="titleHeaders">
+  <h1>Flexion Coding Challenge</h1>
+  <h2>Unit Conversion Grader</h2>
+</div>
+
+<div id="tempConverter">
+  <h5>Temperature Converter</h5>
+  <form id="temperatureConverter">
+
+    <label for="inputNumValue">Input Numerical Value</label>
+    <br />
+    <input type="number" name="inputTempNumValue" />
+    <br />
+
+    <label for="inputTempUnitMeasure">Input Unit of Measure</label>
+    <br />
+    <select name="inputTempUnitMeasure" id="inputTempUnitMeasure">
+      <option *ngFor="let unit of tempUnits" value="{{ unit }}">
+        {{ unit }}
+      </option>
+    </select>
+    <br />
+
+    <label for="targetTempUnitMeasure">Target Unit of Measure</label>
+    <br />
+    <select name="targetTempUnitMeasure" id="targetTempUnitMeasure">
+      <option *ngFor="let unit of tempUnits" value="{{ unit }}">
+        {{ unit }}
+      </option>
+    </select>
+    <br>
+
+    <label for="studentTempResponse">Student Response</label>
+    <br>
+    <input type="number" name="studentTempResponse" id="studentTempResponse">
+    <br />
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="volConverter">
+    <h5>Volume Converter</h5>
+    <form id="volumeConverter">
+
+      <label for="inputVolNumValue">Input Numerical Value</label>
+      <br />
+      <input type="number" name="inputVolNumValue" />
+      <br />
+
+      <label for="inputVolUnitMeasure">Input Unit of Measure</label>
+      <br />
+      <select name="inputVolUnitMeasure" id="inputVolUnitMeasure">
+        <option *ngFor="let unit of volumeUnits" value="{{ unit }}">
+          {{ unit }}
+        </option>
+      </select>
+      <br />
+
+      <label for="targetUnitMeasure">Target Unit of Measure</label>
+      <br />
+      <select name="targetUnitMeasure" id="targetUnitMeasure">
+        <option *ngFor="let unit of volumeUnits" value="{{ unit }}">
+          {{ unit }}
+        </option>
+      </select>
+      <br>
+
+      <label for="studentResponse">Student Response</label>
+      <br>
+      <input type="number" name="studentResponse" id="studentResponse">
+      <br />
+
+      <input type="submit" value="Submit">
+    </form>
+
+
+</div>
