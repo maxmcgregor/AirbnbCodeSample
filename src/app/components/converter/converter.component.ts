@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ResponseCard } from 'src/app/models/response-card';
 
 @Component({
   selector: 'app-converter',
@@ -7,56 +9,60 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConverterComponent implements OnInit {
 
+  responseCard: ResponseCard = new ResponseCard();
+  answerHistory: ResponseCard[] = [];
   tempUnits: string[] = ['Kelvin', 'Celsius', 'Fahrenheit', 'Rankine'];
   volumeUnits: string[] = ['liters', 'tablespoons', 'cubic-inches', 'cups', 'cubic-feet', 'gallons'];
 
-  constructor() { }
+  constructor(
+    private formsMod: FormsModule ) { }
 
   ngOnInit(): void {
   }
 
-  temperatureGrader(inputValue: number, studentResponse: number, inputUnit: string, targetUnit: string): string {
-    let result = 'invalid';
-    if (inputUnit === targetUnit) {
-      return result;
-    } else if (inputUnit === 'Kelvin') {
-      let authoritativeAnswer = this.kelvinConverter(inputValue, targetUnit);
+  temperatureGrader(responseCard: ResponseCard): ResponseCard {
+    if (responseCard.inputUnit === responseCard.targetUnit) {
+      return responseCard;
+    } else if (responseCard.inputUnit === 'Kelvin') {
+      let authoritativeAnswer = this.kelvinConverter(responseCard.inputValue, responseCard.targetUnit);
       let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
+      let roundedResponse = this.rounder(responseCard.studentResponse);
       if (roundedAnswer === roundedResponse) {
-        return 'Correct';
+        responseCard.output = 'Correct';
       } else {
-        return 'Incorrect';
+        responseCard.output = "Incorrect";
       }
-    } else if (inputUnit === 'Celsius') {
-      let authoritativeAnswer = this.celsiusConverter(inputValue, targetUnit);
+    } else if (responseCard.inputUnit === 'Celsius') {
+      let authoritativeAnswer = this.celsiusConverter(responseCard.inputValue, responseCard.targetUnit);
       let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
+      let roundedResponse = this.rounder(responseCard.studentResponse);
       if (roundedAnswer === roundedResponse) {
-        return 'Correct';
+        responseCard.output = 'Correct';
       } else {
-        return 'Incorrect';
+        responseCard.output = "Incorrect";
       }
-    } else if (inputUnit === 'Fahrenheit') {
-      let authoritativeAnswer = this.fahrenheitConverter(inputValue, targetUnit);
+    } else if (responseCard.inputUnit === 'Fahrenheit') {
+      let authoritativeAnswer = this.fahrenheitConverter(responseCard.inputValue, responseCard.targetUnit);
       let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
+      let roundedResponse = this.rounder(responseCard.studentResponse);
       if (roundedAnswer === roundedResponse) {
-        return 'Correct';
+        responseCard.output = 'Correct';
       } else {
-        return 'Incorrect';
+        responseCard.output = "Incorrect";
       }
-    } else if (inputUnit === 'Rankine') {
-      let authoritativeAnswer = this.rankineConverter(inputValue, targetUnit);
+    } else if (responseCard.inputUnit === 'Rankine') {
+      let authoritativeAnswer = this.rankineConverter(responseCard.inputValue, responseCard.targetUnit);
       let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
+      let roundedResponse = this.rounder(responseCard.studentResponse);
       if (roundedAnswer === roundedResponse) {
-        return 'Correct';
+        responseCard.output = 'Correct';
       } else {
-        return 'Incorrect';
+        responseCard.output = "Incorrect";
       }
     }
-    return result;
+    this.answerHistory.push(responseCard);
+    responseCard = new ResponseCard();
+    return responseCard;
   }
 
   volumeGrader(inputValue: number, studentResponse: number, inputUnit: string, targetUnit: string): string {

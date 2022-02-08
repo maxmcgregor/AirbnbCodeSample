@@ -5,42 +5,48 @@
 
 <div id="tempConverter">
   <h5>Temperature Converter</h5>
-  <form id="temperatureConverter">
+  <form #temperatureConverter = "ngForm" (ngSubmit)="temperatureGrader(responseCard)">
 
     <label for="inputNumValue">Input Numerical Value</label>
     <br />
-    <input type="number" name="inputTempNumValue" />
+    <input type="number" name="inputTempNumValue" [(ngModel)]="responseCard.inputValue"/>
     <br />
 
     <label for="inputTempUnitMeasure">Input Unit of Measure</label>
     <br />
-    <select name="inputTempUnitMeasure" id="inputTempUnitMeasure">
-      <option *ngFor="let unit of tempUnits" value="{{ unit }}">
-        {{ unit }}
+    <select name="inputTempUnitMeasure" id="inputTempUnitMeasure" [(ngModel)]="responseCard.inputUnit">
+      <option *ngFor="let inputUnit of tempUnits" value="{{ inputUnit }}">
+        {{ inputUnit }}
       </option>
     </select>
     <br />
 
     <label for="targetTempUnitMeasure">Target Unit of Measure</label>
     <br />
-    <select name="targetTempUnitMeasure" id="targetTempUnitMeasure">
-      <option *ngFor="let unit of tempUnits" value="{{ unit }}">
-        {{ unit }}
+    <select name="targetTempUnitMeasure" id="targetTempUnitMeasure" [(ngModel)]="responseCard.targetUnit">
+      <option *ngFor="let targetUnit of tempUnits" value="{{ targetUnit }}">
+        {{ targetUnit }}
       </option>
     </select>
     <br>
 
     <label for="studentTempResponse">Student Response</label>
     <br>
-    <input type="number" name="studentTempResponse" id="studentTempResponse">
+    <input type="number" name="studentTempResponse" id="studentTempResponse" value="studentTempResponse" [(ngModel)]="responseCard.studentResponse">
     <br />
 
     <input type="submit" value="Submit">
   </form>
 <hr>
+
+
+
+
+
+
   <div id="volConverter">
     <h5>Volume Converter</h5>
-    <form id="volumeConverter">
+    <form #volumeConverter = "ngForm">
 
       <label for="inputVolNumValue">Input Numerical Value</label>
       <br />
@@ -67,7 +73,7 @@
 
       <label for="studentResponse">Student Response</label>
       <br>
-      <input type="number" name="studentResponse" id="studentResponse">
+      <input type="number" name="studentVolResponse" id="studentVolResponse">
       <br />
 
       <input type="submit" value="Submit">
