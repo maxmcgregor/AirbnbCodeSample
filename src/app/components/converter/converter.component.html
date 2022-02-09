@@ -1,55 +1,90 @@
 <div id="titleHeaders">
   <h1>Flexion Coding Challenge</h1>
+  <hr />
   <h2>Unit Conversion Grader</h2>
 </div>
 
-<div id="tempConverter">
-  <h5>Temperature Converter</h5>
-  <form id="temperatureConverter">
+<div class="converterContainer">
+  <div class="converterContainerTemp" id="tempConverter">
+    <h5>Temperature Converter</h5>
+    <hr>
+    <form
+      #temperatureConverter="ngForm"
+      (ngSubmit)="temperatureGrader(tempResponseCard); tempResponseCardReset()"
+    >
+      <label for="inputNumValue">Input Numerical Value</label>
+      <br />
+      <input
+        type="number"
+        name="inputTempNumValue"
+        [(ngModel)]="tempResponseCard.inputValue"
+      />
+      <br />
 
-    <label for="inputNumValue">Input Numerical Value</label>
-    <br />
-    <input type="number" name="inputTempNumValue" />
-    <br />
+      <label for="inputTempUnitMeasure">Input Unit of Measure</label>
+      <br />
+      <select
+        name="inputTempUnitMeasure"
+        id="inputTempUnitMeasure"
+        [(ngModel)]="tempResponseCard.inputUnit"
+      >
+        <option *ngFor="let inputUnit of tempUnits" value="{{ inputUnit }}">
+          {{ inputUnit }}
+        </option>
+      </select>
+      <br />
 
-    <label for="inputTempUnitMeasure">Input Unit of Measure</label>
-    <br />
-    <select name="inputTempUnitMeasure" id="inputTempUnitMeasure">
-      <option *ngFor="let unit of tempUnits" value="{{ unit }}">
-        {{ unit }}
-      </option>
-    </select>
-    <br />
+      <label for="targetTempUnitMeasure">Target Unit of Measure</label>
+      <br />
+      <select
+        name="targetTempUnitMeasure"
+        id="targetTempUnitMeasure"
+        [(ngModel)]="tempResponseCard.targetUnit"
+      >
+        <option *ngFor="let targetUnit of tempUnits" value="{{ targetUnit }}">
+          {{ targetUnit }}
+        </option>
+      </select>
+      <br />
 
-    <label for="targetTempUnitMeasure">Target Unit of Measure</label>
-    <br />
-    <select name="targetTempUnitMeasure" id="targetTempUnitMeasure">
-      <option *ngFor="let unit of tempUnits" value="{{ unit }}">
-        {{ unit }}
-      </option>
-    </select>
-    <br>
+      <label for="studentTempResponse">Student Response</label>
+      <br />
+      <input
+        type="number"
+        name="studentTempResponse"
+        id="studentTempResponse"
+        value="studentTempResponse"
+        [(ngModel)]="tempResponseCard.studentResponse"
+      />
+      <br />
 
-    <label for="studentTempResponse">Student Response</label>
-    <br>
-    <input type="number" name="studentTempResponse" id="studentTempResponse">
-    <br />
+      <input class="submit" type="submit" value="Submit" />
+    </form>
+  </div>
 
-    <input type="submit" value="Submit">
-  </form>
-<hr>
-  <div id="volConverter">
+  <div class="converterContainerVol" id="volConverter">
     <h5>Volume Converter</h5>
-    <form id="volumeConverter">
-
+    <hr>
+    <form
+      #volumeConverter="ngForm"
+      (ngSubmit)="volumeGrader(volResponseCard); volResponseCardReset()"
+    >
       <label for="inputVolNumValue">Input Numerical Value</label>
       <br />
-      <input type="number" name="inputVolNumValue" />
+      <input
+        type="number"
+        name="inputVolNumValue"
+        [(ngModel)]="volResponseCard.inputValue"
+      />
       <br />
 
       <label for="inputVolUnitMeasure">Input Unit of Measure</label>
       <br />
-      <select name="inputVolUnitMeasure" id="inputVolUnitMeasure">
+      <select
+        name="inputVolUnitMeasure"
+        id="inputVolUnitMeasure"
+        [(ngModel)]="volResponseCard.inputUnit"
+      >
         <option *ngFor="let unit of volumeUnits" value="{{ unit }}">
           {{ unit }}
         </option>
@@ -58,20 +93,53 @@
 
       <label for="targetVolUnitMeasure">Target Unit of Measure</label>
       <br />
-      <select name="targetVolUnitMeasure" id="targetVolUnitMeasure">
+      <select
+        name="targetVolUnitMeasure"
+        id="targetVolUnitMeasure"
+        [(ngModel)]="volResponseCard.targetUnit"
+      >
         <option *ngFor="let unit of volumeUnits" value="{{ unit }}">
           {{ unit }}
         </option>
       </select>
-      <br>
-
-      <label for="studentResponse">Student Response</label>
-      <br>
-      <input type="number" name="studentResponse" id="studentResponse">
       <br />
 
-      <input type="submit" value="Submit">
+      <label for="studentVolResponse">Student Response</label>
+      <br />
+      <input
+        type="number"
+        name="studentVolResponse"
+        id="studentVolResponse"
+        [(ngModel)]="volResponseCard.studentResponse"
+      />
+      <br />
+
+      <input class="submit" type="submit" value="Submit" />
     </form>
-
-
+  </div>
+</div>
+<div id="answerHistory" *ngIf="answerHistory.length > 0">
+  <table id="answerTable">
+    <thead>
+      <tr>
+        <th>Input Numerical Value</th>
+        <th>Input Unit of Measure</th>
+        <th>Target Unit of Measure</th>
+        <th>Student Response</th>
+        <th>Output</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of answerHistory">
+        <td>{{ a.inputValue }}</td>
+        <td>{{ a.inputUnit }}</td>
+        <td>{{ a.targetUnit }}</td>
+        <td>{{ a.studentResponse }}</td>
+        <td>{{ a.output }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="submit" (click)="resetAnswerHistory()">
+    Reset Answer History
+  </button>
 </div>

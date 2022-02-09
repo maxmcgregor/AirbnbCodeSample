@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ResponseCard } from 'src/app/models/response-card';
 
 @Component({
   selector: 'app-converter',
@@ -7,123 +9,143 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConverterComponent implements OnInit {
 
+  volResponseCard: ResponseCard = new ResponseCard();
+  tempResponseCard: ResponseCard = new ResponseCard();
+  answerHistory: ResponseCard[] = [];
   tempUnits: string[] = ['Kelvin', 'Celsius', 'Fahrenheit', 'Rankine'];
   volumeUnits: string[] = ['liters', 'tablespoons', 'cubic-inches', 'cups', 'cubic-feet', 'gallons'];
 
-  constructor() { }
+  constructor(
+    private formsMod: FormsModule ) { }
 
   ngOnInit(): void {
   }
 
-  temperatureGrader(inputValue: number, studentResponse: number, inputUnit: string, targetUnit: string): string {
-    let result = 'invalid';
-    if (inputUnit === targetUnit) {
-      return result;
-    } else if (inputUnit === 'Kelvin') {
-      let authoritativeAnswer = this.kelvinConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    } else if (inputUnit === 'Celsius') {
-      let authoritativeAnswer = this.celsiusConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    } else if (inputUnit === 'Fahrenheit') {
-      let authoritativeAnswer = this.fahrenheitConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    } else if (inputUnit === 'Rankine') {
-      let authoritativeAnswer = this.rankineConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    }
-    return result;
+  tempResponseCardReset() {
+    this.tempResponseCard = new ResponseCard();
   }
 
-  volumeGrader(inputValue: number, studentResponse: number, inputUnit: string, targetUnit: string): string {
-    let result = 'invalid';
-    if (inputUnit === targetUnit) {
-      return result;
-    } else if (inputUnit === 'liters') {
-      let authoritativeAnswer = this.litersConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    } else if (inputUnit === 'tablespoons') {
-      let authoritativeAnswer = this.tablespoonsConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    } else if (inputUnit === 'cubic-inches') {
-      let authoritativeAnswer = this.cubicInchesConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    } else if (inputUnit === 'cups') {
-      let authoritativeAnswer = this.cupsConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    } else if (inputUnit === 'cubic-feet') {
-      let authoritativeAnswer = this.cubicFeetConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    } else if (inputUnit === 'gallons') {
-      let authoritativeAnswer = this.gallonsConverter(inputValue, targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      let roundedResponse = this.rounder(studentResponse);
-      if (roundedAnswer === roundedResponse) {
-        return 'Correct';
-      } else {
-        return 'Incorrect';
-      }
-    }
-    return result;
+  volResponseCardReset() {
+    this.volResponseCard = new ResponseCard();
+  }
+
+  resetAnswerHistory() {
+    this.answerHistory = [];
   }
 
   rounder(inputValue: number):number {
     let multiplier = Math.pow(10, 1 || 0);
     return Math.round(inputValue * multiplier);
+  }
+
+  temperatureGrader(responseCard: ResponseCard): ResponseCard {
+    let roundedResponse = this.rounder(responseCard.studentResponse);
+    if (responseCard.inputUnit === responseCard.targetUnit ||
+      responseCard.inputUnit === '' ||
+      responseCard.targetUnit === '' ||
+      responseCard.inputValue === null ||
+      responseCard.studentResponse === null) {
+      this.answerHistory.push(responseCard);
+      responseCard = new ResponseCard();
+      return responseCard;
+    } else if (responseCard.inputUnit === 'Kelvin') {
+      let authoritativeAnswer = this.kelvinConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    } else if (responseCard.inputUnit === 'Celsius') {
+      let authoritativeAnswer = this.celsiusConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    } else if (responseCard.inputUnit === 'Fahrenheit') {
+      let authoritativeAnswer = this.fahrenheitConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    } else if (responseCard.inputUnit === 'Rankine') {
+      let authoritativeAnswer = this.rankineConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    }
+    this.answerHistory.push(responseCard);
+    return responseCard;
+  }
+
+  volumeGrader(responseCard: ResponseCard): ResponseCard {
+    let roundedResponse = this.rounder(responseCard.studentResponse);
+    if (responseCard.inputUnit === responseCard.targetUnit ||
+      responseCard.inputUnit === '' ||
+      responseCard.targetUnit === '' ||
+      responseCard.inputValue === null ||
+      responseCard.studentResponse === null) {
+      this.answerHistory.push(responseCard);
+      responseCard = new ResponseCard();
+      return responseCard;
+    } else if (responseCard.inputUnit === 'liters') {
+      let authoritativeAnswer = this.litersConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    } else if (responseCard.inputUnit === 'tablespoons') {
+      let authoritativeAnswer = this.tablespoonsConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    } else if (responseCard.inputUnit === 'cubic-inches') {
+      let authoritativeAnswer = this.cubicInchesConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    } else if (responseCard.inputUnit === 'cups') {
+      let authoritativeAnswer = this.cupsConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    } else if (responseCard.inputUnit === 'cubic-feet') {
+      let authoritativeAnswer = this.cubicFeetConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    } else if (responseCard.inputUnit === 'gallons') {
+      let authoritativeAnswer = this.gallonsConverter(responseCard.inputValue, responseCard.targetUnit);
+      let roundedAnswer = this.rounder(authoritativeAnswer);
+      if (roundedAnswer === roundedResponse) {
+        responseCard.output = 'Correct';
+      } else {
+        responseCard.output = "Incorrect";
+      }
+    }
+    this.answerHistory.push(responseCard);
+    return responseCard;
   }
 
   kelvinConverter(inputValue: number, targetUnit: string): number {
