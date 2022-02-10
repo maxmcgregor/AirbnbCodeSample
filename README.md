@@ -6,7 +6,7 @@
   When data is entered into the appropriate form, the program will acknowledge if the student response is correct or incorrect. If an entry is wrong, the result will be invalid.
 
 ## How to Access
-  The program can be accessed [by clicking this link.](http://flexioncodingchallenge-maxm.s3-website.us-east-2.amazonaws.com/)
+  The program can be accessed [by clicking this link](http://flexioncodingchallenge-maxm.s3-website.us-east-2.amazonaws.com/) or typing http://flexioncodingchallenge-maxm.s3-website.us-east-2.amazonaws.com/ into your browser.
 
 ## Improvements to Solution
   Below are the next improvements I would make to the program, in order of priority.
@@ -18,5 +18,5 @@
     3) To further improve on the grading button, I'd like to add a service that is connected to the back end so grades can be stored by student name and/or class.
 
     4) A small improvement would be to add logic so that invalid answers can't even be submitted. For example, if the input unit of measure is Celsius, then Celsius could be removed from the target unit of measure list.
-    
+
     5) The styling needs improvement both in the overall look/feel and in the functionality when screen size fluctuates.
