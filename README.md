@@ -10,9 +10,6 @@
 
 ## Improvements to Solution
   Below are the next improvements I would make to the program, in order of priority.
-  
-1) The core code that converts the input numerical value is too clunky. I feel at the very least, the if else chain inside the converter component could be refactored into a switch statement. Additionally, the conversion equations are all so similar, so I feel like with a little extra thought I could reduce the number of equations in half by using the inverse of each equation. Although I will say that feels like more of a math problem than a programming problem. 
-
 
     1) Implement CI/CD. This is first primarily because it is something that Flexion asked for. If it wasn't explicitly part of the challenge prompt, it likely would be midway down this list.
 
