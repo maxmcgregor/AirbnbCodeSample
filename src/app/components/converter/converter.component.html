@@ -139,7 +139,29 @@
       </tr>
     </tbody>
   </table>
-  <button class="submit" (click)="resetAnswerHistory()">
-    Reset Answer History
+  <button class="submit" (click)="responseCardGrader(answerHistory); ">
+    Grade Student Paper
   </button>
+</div>
+
+<div class="studentGradeDiv" *ngIf="letterGrade != ''">
+  Student Number Grade: {{numberGrade}}%
+  <br>
+  Student Letter Grade: {{letterGrade}}
+  <br>
+  <button (click)="resetAnswerHistory(); letterGradeReset(); numberGradeReset()">
+    Finish Student
+  </button>
+</div>
+
+<button (click)="instructionsToggle()" *ngIf="!needInstructions" class="getInstructions">Instructions</button>
+<div *ngIf="needInstructions" class="getInstructions">
+  <br><br>
+  1) One at a time, enter all problems and student responses for each question on each student's worksheet.
+  <br>
+  2) Upon entering all student responses, click Grade Student Paper button.
+  <br>
+  3) Once student grade is logged, click Finish Grading Student.
+  <br>
+<button (click)="instructionsToggle()" class="hideInstructions">Hide Instructions</button>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, Validators } from '@angular/forms';
 import { ResponseCard } from 'src/app/models/response-card';
+
 
 @Component({
   selector: 'app-converter',
@@ -9,6 +10,9 @@ import { ResponseCard } from 'src/app/models/response-card';
 })
 export class ConverterComponent implements OnInit {
 
+  needInstructions: boolean = false;
+  numberGrade: number = 0;
+  letterGrade: string = '';
   volResponseCard: ResponseCard = new ResponseCard();
   tempResponseCard: ResponseCard = new ResponseCard();
   answerHistory: ResponseCard[] = [];
@@ -16,7 +20,8 @@ export class ConverterComponent implements OnInit {
   volumeUnits: string[] = ['liters', 'tablespoons', 'cubic-inches', 'cups', 'cubic-feet', 'gallons'];
 
   constructor(
-    private formsMod: FormsModule ) { }
+    private formsMod: FormsModule
+    ) { }
 
   ngOnInit(): void {
   }
@@ -33,13 +38,84 @@ export class ConverterComponent implements OnInit {
     this.answerHistory = [];
   }
 
+  instructionsToggle() {
+    this.needInstructions = !this.needInstructions;
+  }
+
   rounder(inputValue: number):number {
-    let multiplier = Math.pow(10, 1 || 0);
-    return Math.round(inputValue * multiplier);
+    console.log('inRounder: ');
+    console.log('inputValue: ' + inputValue);
+    console.log('return input rounded: ' + Math.round(inputValue * 10) / 10);
+    return Math.round(inputValue * 10) / 10;
+  }
+
+  responseCardGrader(responseList: ResponseCard[]) {
+    let validAnswers = 0;
+    let correctAnswers = 0;
+    for (let i = 0; i < responseList.length; i++) {
+      if (responseList[i].output != 'Invalid') {
+        validAnswers++;
+        if (responseList[i].output == 'Correct') {
+          correctAnswers++;
+        }
+      }
+    }
+    this.numberGrade = this.rounder((correctAnswers/validAnswers) * 100);
+    this.responseCardLetterGrader(this.numberGrade);
+  }
+
+  responseCardLetterGrader(grade: number) {
+    if (grade >= 97) {
+      this.letterGrade = 'A+';
+    } else if (grade < 97 && grade >= 93) {
+      this.letterGrade = 'A';
+    } else if (grade < 93 && grade >= 90) {
+      this.letterGrade = 'A-';
+    } else if (grade < 90 && grade >= 87) {
+      this.letterGrade = 'B+';
+    } else if (grade < 87 && grade >= 83) {
+      this.letterGrade = 'B';
+    } else if (grade < 83 && grade >= 80) {
+      this.letterGrade = 'B-';
+    } else if (grade < 80 && grade >= 77) {
+      this.letterGrade = 'C+';
+    } else if (grade < 77 && grade >= 73) {
+      this.letterGrade = 'C';
+    } else if (grade < 73 && grade >= 70) {
+      this.letterGrade = 'C-';
+    } else if (grade < 70 && grade >= 67) {
+      this.letterGrade = 'D+';
+    } else if (grade < 67 && grade >= 65) {
+      this.letterGrade = 'D';
+    } else if (grade < 65) {
+      this.letterGrade = 'F';
+    }
+  }
+
+  numberGradeReset() {
+    this.numberGrade = 0;
+  }
+
+  letterGradeReset() {
+    this.letterGrade = '';
+  }
+
+  outputAssigner(responseCard: ResponseCard, converterFunction: Function): ResponseCard {
+    let authoritativeAnswer = converterFunction(responseCard.inputValue, responseCard.targetUnit);
+    let roundedAnswer = this.rounder(authoritativeAnswer);
+    let roundedResponse = this.rounder(responseCard.studentResponse);
+    console.log('in outputAssigner');
+    console.log('roundedAnswer: ' + roundedAnswer);
+    console.log('roundedResponse: ' + roundedResponse);
+    if (roundedAnswer === roundedResponse) {
+      responseCard.output = 'Correct';
+    } else {
+      responseCard.output = 'Incorrect';
+    }
+    return responseCard;
   }
 
   temperatureGrader(responseCard: ResponseCard): ResponseCard {
-    let roundedResponse = this.rounder(responseCard.studentResponse);
     if (responseCard.inputUnit === responseCard.targetUnit ||
       responseCard.inputUnit === '' ||
       responseCard.targetUnit === '' ||
@@ -49,37 +125,13 @@ export class ConverterComponent implements OnInit {
       responseCard = new ResponseCard();
       return responseCard;
     } else if (responseCard.inputUnit === 'Kelvin') {
-      let authoritativeAnswer = this.kelvinConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.kelvinConverter);
     } else if (responseCard.inputUnit === 'Celsius') {
-      let authoritativeAnswer = this.celsiusConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.celsiusConverter);
     } else if (responseCard.inputUnit === 'Fahrenheit') {
-      let authoritativeAnswer = this.fahrenheitConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.fahrenheitConverter);
     } else if (responseCard.inputUnit === 'Rankine') {
-      let authoritativeAnswer = this.rankineConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.rankineConverter);
     }
     this.answerHistory.push(responseCard);
     return responseCard;
@@ -96,53 +148,17 @@ export class ConverterComponent implements OnInit {
       responseCard = new ResponseCard();
       return responseCard;
     } else if (responseCard.inputUnit === 'liters') {
-      let authoritativeAnswer = this.litersConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.litersConverter);
     } else if (responseCard.inputUnit === 'tablespoons') {
-      let authoritativeAnswer = this.tablespoonsConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.tablespoonsConverter);
     } else if (responseCard.inputUnit === 'cubic-inches') {
-      let authoritativeAnswer = this.cubicInchesConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.cubicInchesConverter);
     } else if (responseCard.inputUnit === 'cups') {
-      let authoritativeAnswer = this.cupsConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.cupsConverter);
     } else if (responseCard.inputUnit === 'cubic-feet') {
-      let authoritativeAnswer = this.cubicFeetConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.cubicFeetConverter);
     } else if (responseCard.inputUnit === 'gallons') {
-      let authoritativeAnswer = this.gallonsConverter(responseCard.inputValue, responseCard.targetUnit);
-      let roundedAnswer = this.rounder(authoritativeAnswer);
-      if (roundedAnswer === roundedResponse) {
-        responseCard.output = 'Correct';
-      } else {
-        responseCard.output = "Incorrect";
-      }
+      responseCard = this.outputAssigner(responseCard, this.gallonsConverter);
     }
     this.answerHistory.push(responseCard);
     return responseCard;
