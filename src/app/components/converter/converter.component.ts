@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, Validators } from '@angular/forms';
 import { ResponseCard } from 'src/app/models/response-card';
+
 
 @Component({
   selector: 'app-converter',
@@ -9,6 +10,8 @@ import { ResponseCard } from 'src/app/models/response-card';
 })
 export class ConverterComponent implements OnInit {
 
+  numberGrade: number = 0;
+  letterGrade: string = '';
   volResponseCard: ResponseCard = new ResponseCard();
   tempResponseCard: ResponseCard = new ResponseCard();
   answerHistory: ResponseCard[] = [];
@@ -16,7 +19,8 @@ export class ConverterComponent implements OnInit {
   volumeUnits: string[] = ['liters', 'tablespoons', 'cubic-inches', 'cups', 'cubic-feet', 'gallons'];
 
   constructor(
-    private formsMod: FormsModule ) { }
+    private formsMod: FormsModule
+    ) { }
 
   ngOnInit(): void {
   }
@@ -34,8 +38,58 @@ export class ConverterComponent implements OnInit {
   }
 
   rounder(inputValue: number):number {
-    let multiplier = Math.pow(10, 1 || 0);
-    return Math.round(inputValue * multiplier);
+    return Math.round((inputValue * 10) / 10);
+  }
+
+  responseCardGrader(responseList: ResponseCard[]) {
+    let validAnswers = 0;
+    let correctAnswers = 0;
+    for (let i = 0; i < responseList.length; i++) {
+      if (responseList[i].output != 'Invalid') {
+        validAnswers++;
+        if (responseList[i].output == 'Correct') {
+          correctAnswers++;
+        }
+      }
+    }
+    this.numberGrade = this.rounder((correctAnswers/validAnswers) * 100);
+    this.responseCardLetterGrader(this.numberGrade);
+  }
+
+  responseCardLetterGrader(grade: number) {
+    if (grade >= 97) {
+      this.letterGrade = 'A+';
+    } else if (grade < 97 && grade >= 93) {
+      this.letterGrade = 'A';
+    } else if (grade < 93 && grade >= 90) {
+      this.letterGrade = 'A-';
+    } else if (grade < 90 && grade >= 87) {
+      this.letterGrade = 'B+';
+    } else if (grade < 87 && grade >= 83) {
+      this.letterGrade = 'B';
+    } else if (grade < 83 && grade >= 80) {
+      this.letterGrade = 'B-';
+    } else if (grade < 80 && grade >= 77) {
+      this.letterGrade = 'C+';
+    } else if (grade < 77 && grade >= 73) {
+      this.letterGrade = 'C';
+    } else if (grade < 73 && grade >= 70) {
+      this.letterGrade = 'C-';
+    }  else if (grade < 70 && grade >= 67) {
+      this.letterGrade = 'D+';
+    } else if (grade < 67 && grade >= 65) {
+      this.letterGrade = 'D';
+    } else if (grade < 65) {
+      this.letterGrade = 'F';
+    }
+  }
+
+  numberGradeReset() {
+    this.numberGrade = 0;
+  }
+
+  letterGradeReset() {
+    this.letterGrade = '';
   }
 
   temperatureGrader(responseCard: ResponseCard): ResponseCard {

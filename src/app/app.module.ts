@@ -8,8 +8,7 @@ import { ConverterComponent } from './components/converter/converter.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ConverterComponent
-  ],
+    ConverterComponent  ],
   imports: [
     BrowserModule,
     FormsModule

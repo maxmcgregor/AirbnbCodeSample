@@ -139,7 +139,17 @@
       </tr>
     </tbody>
   </table>
-  <button class="submit" (click)="resetAnswerHistory()">
-    Reset Answer History
+  <button class="submit" (click)="responseCardGrader(answerHistory); ">
+    Grade Student Paper
+  </button>
+</div>
+
+<div class="studentGradeDiv" *ngIf="letterGrade != ''">
+  Student Number Grade: {{numberGrade}}%
+  <br>
+  Student Letter Grade: {{letterGrade}}
+  <br>
+  <button (click)="resetAnswerHistory(); letterGradeReset(); numberGradeReset()">
+    Clear Answer History
   </button>
 </div>
