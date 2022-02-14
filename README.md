@@ -11,18 +11,18 @@
 ## Improvements to Solution
   Below are the next improvements I would make to the program, in order of priority.
 
-    1) Implement CI/CD. This is first primarily because it is something that Flexion asked for. If it wasn't explicitly part of the challenge prompt, it likely would be midway down this list.
+ 1) Implement CI/CD. This is first primarily because it is something that Flexion asked for. If it wasn't explicitly part of the challenge prompt, it likely would be midway down this list.
 
-    2) Implement TDD. I was taught to always test your code. However, I've never put tests together in Angular and wasn't able to implement within this timeframe.
+ 2) Implement TDD. I was taught to always test your code. However, I've never put tests together in Angular and wasn't able to implement within this timeframe.
 
-    3) DRY out the code. I refactored to DRY out some of the conversion process, but realize there was room for improvement. For example, instead of writing my own conversion functions, if I utilized an API (there are plenty to be found with a quick google search), I could have improved efficiency. APIs are realtively new to me (only have implemented once before), so I was unable to act on this idea in the time I had between coming up with the idea and reviewing this code with Flexion.
+ 3) DRY out the code. I refactored to DRY out some of the conversion process, but realize there was room for improvement. For example, instead of writing my own conversion functions, if I utilized an API (there are plenty to be found with a quick google search), I could have improved efficiency. APIs are realtively new to me (only have implemented once before), so I was unable to act on this idea in the time I had between coming up with the idea and reviewing this code with Flexion.
 
-    4) Utilize Angular in a way that better utilized its strengths. Reading through Angular documentation in this process, I realize I misused components. From my understanding, their purpose is to allow code to be reusable, and I don't feel I took advantage of that. For example, leaving grading and converting within the same component doesn't make sense if the program were to grow into other areas of grading.
+ 4) Utilize Angular in a way that better utilized its strengths. Reading through Angular documentation in this process, I realize I misused components. From my understanding, their purpose is to allow code to be reusable, and I don't feel I took advantage of that. For example, leaving grading and converting within the same component doesn't make sense if the program were to grow into other areas of grading.
 
-    5) To further improve on the grading button, I'd like to add a service that is connected to the back end so grades can be stored by student name and/or class.
+ 5) To further improve on the grading button, I'd like to add a service that is connected to the back end so grades can be stored by student name and/or class.
 
-    6) A small improvement would be to add logic so that invalid answers can't even be submitted. For example, if the input unit of measure is Celsius, then Celsius could be removed from the target unit of measure list.
+ 6) A small improvement would be to add logic so that invalid answers can't even be submitted. For example, if the input unit of measure is Celsius, then Celsius could be removed from the target unit of measure list.
 
-    7) Another small improvement would be to change the dropdown menus to radio buttons on the converter forms. It'd save the teacher a single click on each problem.
+ 7) Another small improvement would be to change the dropdown menus to radio buttons on the converter forms. It'd save the teacher a single click on each problem.
 
-    8) The styling needs improvement both in the overall look/feel and in the functionality when screen size fluctuates. 
+ 8) The styling needs improvement both in the overall look/feel and in the functionality when screen size fluctuates. 
