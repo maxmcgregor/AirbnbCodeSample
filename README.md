@@ -4,6 +4,8 @@
   The program can convert temperature units (Kelvin, Celsius, Fahrenheit, Rankine) as well as volume units (liters, tablespoons, cubic-inches, cups, cubic-feet, gallons).
 
   When data is entered into the appropriate form, the program will acknowledge if the student response is correct or incorrect. If an entry is wrong, the result will be invalid.
+  
+  When a teacher is finished entering a student's answers, there is a button that will grade the valid answers and return a numerical and letter grade.
 
 ## How to Access
   The program can be accessed [by clicking this link](http://flexioncodingchallenge-maxm.s3-website.us-east-2.amazonaws.com/) or typing http://flexioncodingchallenge-maxm.s3-website.us-east-2.amazonaws.com/ into your browser.
