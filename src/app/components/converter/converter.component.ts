@@ -10,6 +10,7 @@ import { ResponseCard } from 'src/app/models/response-card';
 })
 export class ConverterComponent implements OnInit {
 
+  needInstructions: boolean = false;
   numberGrade: number = 0;
   letterGrade: string = '';
   volResponseCard: ResponseCard = new ResponseCard();
@@ -35,6 +36,10 @@ export class ConverterComponent implements OnInit {
 
   resetAnswerHistory() {
     this.answerHistory = [];
+  }
+
+  instructionsToggle() {
+    this.needInstructions = !this.needInstructions;
   }
 
   rounder(inputValue: number):number {

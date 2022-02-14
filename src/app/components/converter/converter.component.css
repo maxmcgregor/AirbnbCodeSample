@@ -96,5 +96,12 @@ td {
   border-bottom: 1px solid;
 }
 
+.getInstructions{
+  position: absolute;
+  bottom: 20px;
+  margin-top: 15px;
+  float: right;
+}
+
 
 
