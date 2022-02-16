@@ -1,4 +1,4 @@
-# FlexionCodingChallenge
+# Airbnb Code Sample
   Users of this program are science teachers who teach the "Unit Conversion" science unit. The application assists in helping teachers grade unit-conversion problems distributed on paper worksheets. Teachers will be able to enter the questions and the student responses into the program to be graded.
 
   The program can convert temperature units (Kelvin, Celsius, Fahrenheit, Rankine) as well as volume units (liters, tablespoons, cubic-inches, cups, cubic-feet, gallons).
