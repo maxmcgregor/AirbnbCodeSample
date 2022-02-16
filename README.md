@@ -11,6 +11,8 @@
 ## Improvements to Solution
   Below are the next improvements I would make to the program, in order of priority.
 
+    1A) Writing this the day before the code review, I realized the deployed version styling is slightly different than my local version. The instructions, when displayed, may block the submit button on the temperature converter. This needs to be fixed immediately as it creates a poor user experience.
+
     1) Implement CI/CD. This is first primarily because it is something that Flexion asked for. If it wasn't explicitly part of the challenge prompt, it likely would be midway down this list.
 
     2) Implement TDD. I was taught to always test your code. However, I've never put tests together in Angular and wasn't able to implement within this timeframe.

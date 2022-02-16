@@ -7,7 +7,7 @@
 <div class="converterContainer">
   <div class="converterContainerTemp" id="tempConverter">
     <h5>Temperature Converter</h5>
-    <hr>
+    <hr />
     <form
       #temperatureConverter="ngForm"
       (ngSubmit)="temperatureGrader(tempResponseCard); tempResponseCardReset()"
@@ -64,7 +64,7 @@
 
   <div class="converterContainerVol" id="volConverter">
     <h5>Volume Converter</h5>
-    <hr>
+    <hr />
     <form
       #volumeConverter="ngForm"
       (ngSubmit)="volumeGrader(volResponseCard); volResponseCardReset()"
@@ -139,29 +139,42 @@
       </tr>
     </tbody>
   </table>
-  <button class="submit" (click)="responseCardGrader(answerHistory); ">
+  <button class="submit" (click)="responseCardGrader(answerHistory); showInstructionsToggleOff()">
     Grade Student Paper
   </button>
 </div>
 
 <div class="studentGradeDiv" *ngIf="letterGrade != ''">
-  Student Number Grade: {{numberGrade}}%
-  <br>
-  Student Letter Grade: {{letterGrade}}
-  <br>
-  <button (click)="resetAnswerHistory(); letterGradeReset(); numberGradeReset()">
+  Student Number Grade: {{ numberGrade }}%
+  <br />
+  Student Letter Grade: {{ letterGrade }}
+  <br />
+  <button
+    (click)="resetAnswerHistory(); letterGradeReset(); numberGradeReset(); showInstructionsToggleOn()"
+  >
     Finish Student
   </button>
 </div>
 
-<button (click)="instructionsToggle()" *ngIf="!needInstructions" class="getInstructions">Instructions</button>
-<div *ngIf="needInstructions" class="getInstructions">
-  <br><br>
-  1) One at a time, enter all problems and student responses for each question on each student's worksheet.
-  <br>
-  2) Upon entering all student responses, click Grade Student Paper button.
-  <br>
-  3) Once student grade is logged, click Finish Grading Student.
-  <br>
-<button (click)="instructionsToggle()" class="hideInstructions">Hide Instructions</button>
+<div class="instructionsDiv" *ngIf="showInstructions">
+  <button
+    (click)="needInstructionsToggle()"
+    *ngIf="!needInstructions"
+    class="getInstructions"
+  >
+    Instructions
+  </button>
+  <div *ngIf="needInstructions" class="showInstructions">
+    <br /><br />
+    1) One at a time, enter all problems and student responses for each question
+    on each student's worksheet.
+    <br />
+    2) Upon entering all student responses, click Grade Student Paper button.
+    <br />
+    3) Once student grade is logged, click Finish Grading Student.
+    <br />
+    <button (click)="needInstructionsToggle()" class="hideInstructions">
+      Hide Instructions
+    </button>
+  </div>
 </div>

@@ -41,10 +41,8 @@ h1, h2, h5 {
 }
 
 #answerHistory {
-  /* display: inline-block; */
   text-align: center;
   width: 65%, auto;
-  /* float: auto; */
   margin-top: 20px;
   margin-left: 15%;
   margin-right: 15%;
@@ -101,6 +99,16 @@ td {
   bottom: 20px;
   margin-top: 15px;
   float: right;
+}
+
+.showInstructions {
+  position: fixed;
+  bottom: 30px;
+}
+
+.studentGradeDiv {
+  position: fixed;
+  bottom: 75px;
 }
 
 

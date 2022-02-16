@@ -10,6 +10,7 @@ import { ResponseCard } from 'src/app/models/response-card';
 })
 export class ConverterComponent implements OnInit {
 
+  showInstructions: boolean = true;
   needInstructions: boolean = false;
   numberGrade: number = 0;
   letterGrade: string = '';
@@ -38,8 +39,20 @@ export class ConverterComponent implements OnInit {
     this.answerHistory = [];
   }
 
-  instructionsToggle() {
+  needInstructionsToggle() {
     this.needInstructions = !this.needInstructions;
+  }
+  showInstructionsToggleOff() {
+    if (this.showInstructions) {
+      this.showInstructions = !this.showInstructions;
+    }
+  }
+
+  showInstructionsToggleOn() {
+    if (!this.showInstructions) {
+      this.showInstructions = !this.showInstructions;
+      this.needInstructions = false;
+    }
   }
 
   rounder(inputValue: number):number {
@@ -138,7 +151,6 @@ export class ConverterComponent implements OnInit {
   }
 
   volumeGrader(responseCard: ResponseCard): ResponseCard {
-    let roundedResponse = this.rounder(responseCard.studentResponse);
     if (responseCard.inputUnit === responseCard.targetUnit ||
       responseCard.inputUnit === '' ||
       responseCard.targetUnit === '' ||
